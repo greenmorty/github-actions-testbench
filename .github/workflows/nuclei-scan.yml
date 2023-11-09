@@ -1,21 +1,28 @@
-name: Nuclei Scan
+name: Nuclei - Vulnerability Scan
+
 on:
-  # schedule:
-  # - cron: "0 8 * * *" # Runs at 08:00 UTC every day
-  push:
-    branches: [ nuclei-scan ]
-  workflow_dispatch:
+    schedule:
+      - cron: '0 0 * * *'
+    workflow_dispatch:
+
 jobs:
   nuclei-scan:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        url: 
-          - http://20.86.52.188
-          - https://20.86.52.188
     steps:
-    - name: Scan ${{ matrix.url }} with Nuclei
-      uses: projectdiscovery/nuclei-action@508c1868d4884e9fb6eb4d8d680cbc6b493c7ec5
-      with:
-        target: ${{ matrix.url }}
+      - uses: actions/checkout@v2
+
+      - name: Nuclei - Vulnerability Scan
+        uses: projectdiscovery/nuclei-action@main
+        with:
+          target: http://20.86.52.188
+
+      - name: GitHub Workflow artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: nuclei.log
+          path: nuclei.log
+
+      - name: GitHub Security Dashboard Alerts update
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: nuclei.sarif
