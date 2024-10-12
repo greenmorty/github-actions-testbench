@@ -1,9 +1,9 @@
 name: Nuclei - Vulnerability Scan
 
 on:
-    schedule:
-      - cron: '0 0 * * *'
-    workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   nuclei-scan:
@@ -17,7 +17,7 @@ jobs:
           target: www.kiyiemniyeti.gov.tr
 
       - name: GitHub Workflow artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3  # Updated version
         with:
           name: nuclei.log
           path: nuclei.log
