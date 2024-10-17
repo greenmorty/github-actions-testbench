@@ -1,4 +1,4 @@
-name: IIS Short Name Scanner
+name: IIS Shortname DAST Scan
 
 on:
   push:
@@ -11,25 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout the IIS Shortname Scanner repo
       uses: actions/checkout@v2
-
-    - name: Set up Java
-      uses: actions/setup-java@v3
       with:
-        distribution: 'temurin'  # You can adjust this to another Java distribution if needed
-        java-version: '17'       # Specify Java 17 to support the required class version
+        repository: lijiejie/IIS_shortname_Scanner
 
-    - name: Install IIS Short Name Scanner
+    - name: Set up Python environment
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'
+
+    - name: Install Python dependencies
       run: |
-        wget https://github.com/irsdl/IIS-ShortName-Scanner/raw/master/release/iis_shortname_scanner.jar -O iis_shortname_scanner.jar
-        wget https://github.com/irsdl/IIS-ShortName-Scanner/raw/master/release/config.xml -O config.xml
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt || true  # No explicit requirements file, so this is optional
 
-    - name: Run IIS Short Name Scanner
+    - name: Run IIS Shortname Scanner
       run: |
-        java -jar iis_shortname_scanner.jar -u https://mcens.tcmb.gov.tr -o scan-output.log
+        python iis_shortname_scan.py https://mcens.tcmb.gov.tr > scan-output.log
+      # Replace https://mcens.tcmb.gov.tr with the actual target URL you want to scan
 
-    - name: Upload Scan Output
+    - name: Upload scan output
       uses: actions/upload-artifact@v3
       with:
         name: iis-shortname-scan-output
