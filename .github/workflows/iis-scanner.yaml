@@ -22,13 +22,12 @@ jobs:
 
     - name: Install IIS Short Name Scanner
       run: |
-        wget https://github.com/irsdl/IIS-ShortName-Scanner/blob/master/release/iis_shortname_scanner.jar -O iis_shortname_scanner.jar
-        wget https://github.com/irsdl/IIS-ShortName-Scanner/blob/master/release/config.xml -O config.xml
+        wget https://github.com/irsdl/IIS-ShortName-Scanner/raw/master/release/iis_shortname_scanner.jar -O iis_shortname_scanner.jar
+        wget https://github.com/irsdl/IIS-ShortName-Scanner/raw/master/release/config.xml -O config.xml
 
     - name: Run IIS Short Name Scanner
       run: |
         java -jar iis_shortname_scanner.jar -u https://mcens.tcmb.gov.tr -o scan-output.log
-      # Replace http://your-iis-server-url with your actual target URL
 
     - name: Upload Scan Output
       uses: actions/upload-artifact@v3  # Use the latest version v3
