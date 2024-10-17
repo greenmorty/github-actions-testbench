@@ -27,7 +27,7 @@ jobs:
 
     - name: Run IIS Short Name Scanner
       run: |
-        java -jar iis_shortname_scanner.jar -u https://mcens.tcmb.gov.tr > scan-output.log
+        java -jar iis_shortname_scanner.jar -u https://mcens.tcmb.gov.tr config.xml > scan-output.log
 
     - name: Upload Scan Output
       uses: actions/upload-artifact@v3
