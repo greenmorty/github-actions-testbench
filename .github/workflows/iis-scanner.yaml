@@ -22,7 +22,8 @@ jobs:
 
     - name: Install IIS Short Name Scanner
       run: |
-        wget https://github.com/irsdl/iis-shortname-scanner/releases/download/v1.0/iis_shortname_scanner.jar -O iis_shortname_scanner.jar
+        wget https://github.com/irsdl/IIS-ShortName-Scanner/blob/master/release/iis_shortname_scanner.jar -O iis_shortname_scanner.jar
+        wget https://github.com/irsdl/IIS-ShortName-Scanner/blob/master/release/config.xml -O config.xml
 
     - name: Run IIS Short Name Scanner
       run: |
