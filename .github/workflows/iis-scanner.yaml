@@ -17,8 +17,8 @@ jobs:
     - name: Set up Java
       uses: actions/setup-java@v3
       with:
-        distribution: 'temurin'  # Use other distributions if required
-        java-version: '11'       # Specify the Java version needed, adjust if necessary
+        distribution: 'temurin'  # You can adjust this to another Java distribution if needed
+        java-version: '17'       # Specify Java 17 to support the required class version
 
     - name: Install IIS Short Name Scanner
       run: |
@@ -30,7 +30,7 @@ jobs:
         java -jar iis_shortname_scanner.jar -u https://mcens.tcmb.gov.tr -o scan-output.log
 
     - name: Upload Scan Output
-      uses: actions/upload-artifact@v3  # Use the latest version v3
+      uses: actions/upload-artifact@v3
       with:
         name: iis-shortname-scan-output
         path: scan-output.log
