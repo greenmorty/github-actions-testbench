@@ -28,7 +28,7 @@ jobs:
 
     - name: Run IIS Shortname Scanner
       run: |
-        python iis_shortname_scan.py https://mcens.tcmb.gov.tr > scan-output.log
+        python iis_shortname_scan.py https://egm.gov.tr > scan-output.log
       # Replace https://mcens.tcmb.gov.tr with the actual target URL you want to scan
 
     - name: Upload scan output
