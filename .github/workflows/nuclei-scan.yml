@@ -18,7 +18,7 @@ jobs:
           target: egm.gov.tr
 
       - name: GitHub Workflow artifacts
-        uses: actions/upload-artifact@v3  # Updated version
+        uses: actions/upload-artifact@v4  # Updated version
         with:
           name: nuclei.log
           path: nuclei.log
