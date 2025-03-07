@@ -32,7 +32,8 @@ jobs:
           #active: # optional
           # Format to save of output file
           #json: # optional
-          
+      - name: IP
+        run: ip a
       - name: Nuclei - Vulnerability Scan
         uses: projectdiscovery/nuclei-action@v2.0.1
         with:
