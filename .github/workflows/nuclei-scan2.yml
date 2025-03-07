@@ -9,8 +9,6 @@ jobs:
   tech_scan:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v2
 
       - name: Install Nuclei
         run: |
