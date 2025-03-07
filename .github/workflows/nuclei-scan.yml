@@ -12,10 +12,28 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: SubFinder Action
+        uses: projectdiscovery/subfinder-action@v1.0.0
+        with:
+          # Domain to run subdomain enumeration
+          domain: cloudflare.com
+          # List of domains to run subdomain enumeration
+          #list: # optional, default is 
+          # Config file to use for subdomain enumeration
+          #config: # optional, default is 
+          # File to save output result
+          output: subs.txt
+          # Additional subfinder CLI flags to use
+          #flags: # optional
+          # Filter subdomains with no DNS records
+          #active: # optional
+          # Format to save of output file
+          #json: # optional
+          
       - name: Nuclei - Vulnerability Scan
         uses: projectdiscovery/nuclei-action@v2.0.1
         with:
-          target: testphp.vulnweb.com
+          urls: subs.txt
           templates: technologies
 
       - name: GitHub Workflow artifacts
