@@ -1,25 +1,43 @@
-name: Nuclei - Vulnerability Scan
+name: Nuclei Tech Scan
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+    branches: [ main ]
+  pull_request:
 
 jobs:
-  nuclei-scan:
+  tech_scan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out repository
+        uses: actions/checkout@v2
 
-      - name: Nuclei - Vulnerability Scan
-        uses: projectdiscovery/nuclei-action@main
-        with:
-          target: http://testphp.vulnweb.com
-          templates: nuclei-templates/technologies/
+      - name: Install Nuclei
+        run: |
+          echo "Downloading and installing Nuclei..."
+          wget https://github.com/projectdiscovery/nuclei/releases/latest/download/nuclei_amd64.zip
+          unzip nuclei_amd64.zip
+          sudo mv nuclei /usr/local/bin
+          nuclei -version
 
-      - name: GitHub Workflow artifacts
-        uses: actions/upload-artifact@v4  # Updated version
+      - name: Install Nuclei Templates
+        run: |
+          echo "Installing official Nuclei templates..."
+          # Clone or pull the latest templates. If you have a specific commit you want, pin it.
+          git clone https://github.com/projectdiscovery/nuclei-templates.git
+          ls nuclei-templates
+
+      - name: Run Nuclei tech detection scan
+        run: |
+          echo "Running Nuclei tech scan on example.com..."
+          # Adjust URL and any flags as needed
+          nuclei -u https://example.com \
+                 -t nuclei-templates/technologies/ \
+                 -silent \
+                 -o nuclei_tech_scan_results.txt
+
+      - name: Upload scan results
+        uses: actions/upload-artifact@v2
         with:
-          name: nuclei.log
-          path: nuclei.log
+          name: nuclei-tech-scan-results
+          path: nuclei_tech_scan_results.txt
