@@ -15,7 +15,8 @@ jobs:
       - name: Nuclei - Vulnerability Scan
         uses: projectdiscovery/nuclei-action@main
         with:
-          target: m.nextconnect.app
+          target: http://testphp.vulnweb.com
+          templates: nuclei-templates/technologies/
 
       - name: GitHub Workflow artifacts
         uses: actions/upload-artifact@v4  # Updated version
