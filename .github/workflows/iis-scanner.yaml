@@ -29,7 +29,7 @@ jobs:
       # Replace https://mcens.tcmb.gov.tr with the actual target URL you want to scan
 
     - name: Upload scan output
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: iis-shortname-scan-output
         path: scan-output.log

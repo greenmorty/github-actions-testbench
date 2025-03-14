@@ -27,7 +27,7 @@ jobs:
         java -jar iis_shortname_scanner.jar -u egm.gov.tr config.xml > scan-output.log
 
     - name: Upload Scan Output
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: iis-shortname-scan-output
         path: scan-output.log
