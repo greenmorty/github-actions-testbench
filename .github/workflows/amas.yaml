@@ -37,10 +37,12 @@ jobs:
         shell: bash
 
       - name: Run Amass Enumeration
+        shell: bash --noprofile --norc -e -o pipefail {0}
         run: |
-          # Run amass enumeration using the domains file
-          ./bin/amass enum -ip -brute -min-for-recursive 2 -dir ./ -df domains.txt -o "${PWD}/amass.log" -log "${PWD}/amass-errors.log"
-        shell: bash
+          ./bin/amass enum -active -ip -brute -min-for-recursive 2 \
+            -dir ./ -df domains.txt \
+            -o "${PWD}/amass.log" \
+            -log "${PWD}/amass-errors.log"
 
       - name: Upload Amass Artifacts
         uses: actions/upload-artifact@v4
