@@ -36,7 +36,7 @@ jobs:
             -d "${{ github.event.inputs.target }}" \
             -brute \
             -min-for-recursive 2 \
-            -w /root/dns_lists/deepmagic.com-top50kprefixes.txt \
+            -w "./dns_lists/deepmagic.com-top50kprefixes.txt" \
             -dir amass4owasp \
             -config /root/amass/config.yaml \
             -o "amass_results_${{ github.event.inputs.target }}.txt"
