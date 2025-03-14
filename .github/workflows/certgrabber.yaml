@@ -30,7 +30,7 @@ jobs:
           if [ ! -f "./bin/ffuf" ]; then
             echo "Certgrabber binary not found. Installing Certgrabber..."
             mkdir -p ./bin
-            wget https://github.com/stavinski/certgrabber/releases/download/v1.0.4/certgrabber_1.0.4_Linux_x86_64
+            curl -Lo https://github.com/stavinski/certgrabber/releases/download/v1.0.4/certgrabber_1.0.4_Linux_x86_64
             cp certgrabber_1.0.4_Linux_x86_64 ./bin/certgrabber
             chmod +x ./bin/certgrabber
           else
