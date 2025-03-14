@@ -25,6 +25,17 @@ jobs:
       - name: Create certs directory
         run: mkdir -p certs
 
+      - name: Install Certgrabber if not installed
+        run: |
+          if [ ! -f "./bin/ffuf" ]; then
+            echo "Certgrabber binary not found. Installing Certgrabber..."
+            mkdir -p ./bin
+            wget https://github.com/stavinski/certgrabber/releases/download/v1.0.4/certgrabber_1.0.4_Linux_x86_64
+            cp certgrabber_1.0.4_Linux_x86_64 ./bin/certgrabber
+            chmod +x ./bin/certgrabber
+          else
+            echo "Certgrabber is already installed."
+          fi
       - name: Run certgrabber to collect certificates
         run: |
           # If the certgrabber binary is not available in ./bin,
