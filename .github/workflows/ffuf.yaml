@@ -32,7 +32,10 @@ jobs:
             echo "FFUF is already installed."
           fi
         shell: bash
-
+      - name: Download Wordlist
+        run: |
+          wget https://raw.githubusercontent.com/danielmiessler/SecLists/refs/heads/master/Discovery/Web-Content/raft-medium-directories.txt
+        shell: bash
       - name: Run FFUF Directory Scan
         run: |
           ./bin/ffuf -o "${PWD}/${{ github.event.inputs.target }}-fuff-all.json" -t 1 -p 0.5 -rate ${{ github.event.inputs.rate_limit }} -w raft-medium-directories.txt -recursion -recursion-depth 2 -u "https://${{ github.event.inputs.target }}/FUZZ" -mc 401,402,403,200,201,500,501,502,300,301,302,530
