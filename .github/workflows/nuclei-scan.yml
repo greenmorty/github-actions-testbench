@@ -1,10 +1,12 @@
 name: Nuclei - Vulnerability Scan
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
+    inputs:
+      target:
+        description: 'Target domain for Nuclei Scan'
+        required: true
+        default: 'example.com'
 
 jobs:
   nuclei-scan:

@@ -1,9 +1,6 @@
 name: IIS Short Name Scanner
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
