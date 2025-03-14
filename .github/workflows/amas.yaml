@@ -6,7 +6,7 @@ on:
       target:
         description: 'Target domain to scan'
         required: true
-        default: 'example.com'
+        default: 'owasp.org'
 
 jobs:
   amass-enum:
@@ -19,7 +19,6 @@ jobs:
 
       - name: Install Amass if not present
         run: |
-          # Check if Amass is already in the ./bin folder. If not, install it.
           if [ ! -f "./bin/amass" ]; then
             echo "Amass not found in ./bin. Installing..."
             mkdir -p ./bin
@@ -30,25 +29,21 @@ jobs:
           fi
         shell: bash
 
-      - name: Prepare domains file
-        run: |
-          # Create a domains file from the input "target"
-          echo "${{ github.event.inputs.target }}" > domains.txt
-        shell: bash
-
       - name: Run Amass Enumeration
         shell: bash --noprofile --norc -e -o pipefail {0}
         run: |
-          ./bin/amass enum -active -ip -brute -min-for-recursive 2 \
-            -dir ./ -df domains.txt \
-            -o "${PWD}/amass.log" \
-            -log "${PWD}/amass-errors.log"
+          ./bin/amass enum -active \
+            -d "${{ github.event.inputs.target }}" \
+            -brute \
+            -min-for-recursive 2 \
+            -w /root/dns_lists/deepmagic.com-top50kprefixes.txt \
+            -dir amass4owasp \
+            -config /root/amass/config.yaml \
+            -o "amass_results_${{ github.event.inputs.target }}.txt"
 
-      - name: Upload Amass Artifacts
+      - name: Upload Amass Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: amass-logs
-          path: |
-            amass.log
-            amass-errors.log
+          name: amass-results
+          path: "amass_results_${{ github.event.inputs.target }}.txt"
           retention-days: 1
