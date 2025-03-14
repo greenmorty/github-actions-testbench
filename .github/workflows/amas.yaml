@@ -39,7 +39,7 @@ jobs:
       - name: Run Amass Enumeration
         shell: bash --noprofile --norc -e -o pipefail {0}
         run: |
-          ./bin/amass enum -active -brute -o "amass_results_${{ github.event.inputs.target }}.txt" -d "${{ github.event.inputs.target }}" 
+          ./bin/amass enum -active -brute -v -o "amass_results_${{ github.event.inputs.target }}.txt" -d "${{ github.event.inputs.target }}" 
 
       - name: Upload Amass Artifact
         uses: actions/upload-artifact@v4
