@@ -17,6 +17,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Download Wordlist
+        run: |
+          mkdir -p dns_lists
+          curl -L https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/DNS/deepmagic.com-prefixes-top50000.txt \
+            -o dns_lists/deepmagic.com-prefixes-top50000.txt
+        shell: bash
+
       - name: Install Amass if not present
         run: |
           if [ ! -f "./bin/amass" ]; then
@@ -36,7 +43,7 @@ jobs:
             -d "${{ github.event.inputs.target }}" \
             -brute \
             -min-for-recursive 2 \
-            -w "./dns_lists/deepmagic.com-top50kprefixes.txt" \
+            -w "./dns_lists/deepmagic.com-prefixes-top50000.txt" \
             -dir amass4owasp \
             -config /root/amass/config.yaml \
             -o "amass_results_${{ github.event.inputs.target }}.txt"
